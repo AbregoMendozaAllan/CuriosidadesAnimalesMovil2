@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
 
-class NuevaCuriosidadScreen extends StatefulWidget {
+class NuevaCuriosidadScreen extends StatelessWidget {
   const NuevaCuriosidadScreen({Key? key}) : super(key: key);
-
-  @override
-  _NuevaCuriosidadScreenState createState() => _NuevaCuriosidadScreenState();
-}
-
-class _NuevaCuriosidadScreenState extends State<NuevaCuriosidadScreen> {
-  int _selectedIndex = 1; // Initial index of the second screen
 
   @override
   Widget build(BuildContext context) {
