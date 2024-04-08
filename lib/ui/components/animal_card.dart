@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+void main() {
+  runApp(const AnimalCard(name: 'lion', description: 'lorem', emoji: '',));
+}
+
 class AnimalCard extends StatelessWidget {
   final String name;
   final String description;
