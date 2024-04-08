@@ -1,4 +1,4 @@
-import 'package:curiosidadesanimalesmovil2/ui/homescreen.dart';
+//import 'package:curiosidadesanimalesmovil2/ui/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'ui/nuevaCuriosidad.dart';
 
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: NuevaCuriosidadScreen(), // Utiliza NuevaCuriosidadScreen como la pantalla inicial
+      home: const NuevaCuriosidadScreen(), // Utiliza NuevaCuriosidadScreen como la pantalla inicial
     );
   }
 }

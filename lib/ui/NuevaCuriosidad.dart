@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'components/bottom_navigation_bar.dart';
 
-class NuevaCuriosidadScreen extends StatelessWidget {
-  const NuevaCuriosidadScreen({super.key});
+class NuevaCuriosidadScreen extends StatefulWidget {
+  const NuevaCuriosidadScreen({Key? key}) : super(key: key);
+
+  @override
+  _NuevaCuriosidadScreenState createState() => _NuevaCuriosidadScreenState();
+}
+
+class _NuevaCuriosidadScreenState extends State<NuevaCuriosidadScreen> {
+  int _selectedIndex = 0; // Default index of first screen
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +70,14 @@ class NuevaCuriosidadScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: _selectedIndex,
+        onTap: (int index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
       ),
     );
   }
