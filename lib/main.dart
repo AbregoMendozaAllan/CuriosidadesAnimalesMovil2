@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Recuperar Contraseña'),
+        title: const Text('Recuperar Contraseña'),
         content: TextField(
           controller: _usernameController, // Reutilizar el controlador de nombre de usuario para el email
           decoration: const InputDecoration(
