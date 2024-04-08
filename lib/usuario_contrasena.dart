@@ -12,7 +12,7 @@ class UsuarioContrasenaPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Verificar Usuario',
+              'Verificar Usuario y Cambio de Contraseña',
               style: TextStyle(fontSize: 24.0),
             ),
             SizedBox(height: 20.0),

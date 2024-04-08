@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'register_page.dart'; // Asegúrate de usar la ruta correcta a tu archivo
-
+import 'usuario_contrasena.dart';
+import 'register_page.dart';
+import 'cambio_contrasena.dart';
 
 void main() {
   runApp(MyApp());
@@ -96,7 +97,12 @@ class _LoginPageState extends State<LoginPage> {
             ),
 
             TextButton(
-              onPressed: _showForgotPasswordDialog,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => UsuarioContrasenaPage()),
+                );
+              },
               child: Text('Olvidé mi contraseña'),
             ),
           ],
