@@ -5,10 +5,10 @@ class BottomNavBar extends StatelessWidget {
   final Function(int) onTap;
 
   const BottomNavBar({
-    super.key,
+    Key? key,
     required this.currentIndex,
     required this.onTap,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +33,7 @@ class BottomNavBar extends StatelessWidget {
       ],
       currentIndex: currentIndex,
       selectedItemColor: Colors.amber[800],
+      unselectedItemColor: Colors.black, // Setting unselected icon color to black
       onTap: onTap,
     );
   }
