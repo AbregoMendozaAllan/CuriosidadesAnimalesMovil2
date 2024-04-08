@@ -33,6 +33,7 @@ class BottomNavBar extends StatelessWidget {
       ],
       currentIndex: currentIndex,
       selectedItemColor: Colors.amber[800],
+      unselectedItemColor: Colors.black, // Setting unselected icon color to black
       onTap: onTap,
     );
   }
