@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
         title: Text('Recuperar Contraseña'),
         content: TextField(
           controller: _usernameController, // Reutilizar el controlador de nombre de usuario para el email
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             hintText: 'Email',
           ),
           keyboardType: TextInputType.emailAddress,
@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inicio de Sesión'),
+        title: const Text('Inicio de Sesión'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -67,23 +67,23 @@ class _LoginPageState extends State<LoginPage> {
           children: <Widget>[
             TextField(
               controller: _usernameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Usuario',
               ),
             ),
             TextField(
               controller: _passwordController,
               obscureText: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Contraseña',
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 print('Usuario: ${_usernameController.text}, Contraseña: ${_passwordController.text}');
               },
-              child: Text('Iniciar Sesión'),
+              child: const Text('Iniciar Sesión'),
             ),
             TextButton(
               onPressed: () {
@@ -92,12 +92,12 @@ class _LoginPageState extends State<LoginPage> {
                   MaterialPageRoute(builder: (context) => RegisterPage()),
                 );
               },
-              child: Text('Registrarse'),
+              child: const Text('Registrarse'),
             ),
 
             TextButton(
               onPressed: _showForgotPasswordDialog,
-              child: Text('Olvidé mi contraseña'),
+              child: const Text('Olvidé mi contraseña'),
             ),
           ],
         ),
