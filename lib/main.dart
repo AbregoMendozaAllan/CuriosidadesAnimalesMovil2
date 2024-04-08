@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'register_page.dart'; // Asegúrate de usar la ruta correcta a tu archivo
+import 'ui/register_page.dart'; // Asegúrate de usar la ruta correcta a tu archivo
 
 
 void main() {

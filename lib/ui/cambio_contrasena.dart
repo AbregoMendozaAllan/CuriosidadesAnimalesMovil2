@@ -10,14 +10,14 @@ class CambioContrasenaPage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(20.0),
             child: Text(
               'Cambiar Contraseña',
               style: TextStyle(fontSize: 24.0),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             child: TextField(
               decoration: InputDecoration(
@@ -26,7 +26,7 @@ class CambioContrasenaPage extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             child: TextField(
               decoration: InputDecoration(
