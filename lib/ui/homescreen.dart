@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'components/bottom_navigation_bar.dart';
-
+import 'components/animal_card.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  const MyHomePage({Key? key});
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -11,16 +10,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0; // Default index of first screen
-
-  // List of widgets to call on onTap.
-  // Ideally, you might use a navigation mechanism like Navigator.pushNamed
-  // to navigate to different screens.
-  final List<Widget> _widgetOptions = [
-    const Text('Home Page'),
-    const Text('Random Page'),
-    const Text('Favorites Page'),
-    const Text('Settings Page'),
-  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -30,17 +19,50 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('BottomAppBar Demo'),
-      ),
-      body: Center(
-        // Display the selected page
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+    return const Scaffold(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Welcome, User!',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 20),
+                AnimalCard(name: 'Cat', description: 'dato de un gato', emoji: '🐱',),
+                SizedBox(height: 20),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end, // Align content to the bottom
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 16.0, bottom: 10.0),
+                  child: Text(
+                    'Historial',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                AnimalCard(name: 'Cat', description: 'dato de un gato', emoji: '🐱',),
+                AnimalCard(name: 'Cat', description: 'dato de un gato', emoji: '🐱',),
+                AnimalCard(name: 'Cat', description: 'dato de un gato', emoji: '🐱',),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
