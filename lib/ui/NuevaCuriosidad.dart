@@ -39,7 +39,8 @@ class _NuevaCuriosidadScreenState extends State<NuevaCuriosidadScreen> {
                 IconButton(
                   icon: const Icon(Icons.shuffle),
                   onPressed: () {
-                    // Lógica para seleccionar un animal aleatorio
+                    _showCuriosityCard = true; // Muestra la tarjeta de curiosidad al presionar el botón del icono de aleatorio
+                    setState(() {});
                   },
                 ),
                 DropdownButton<String>(
@@ -61,9 +62,6 @@ class _NuevaCuriosidadScreenState extends State<NuevaCuriosidadScreen> {
                   onChanged: (String? value) {
                     setState(() {
                       _selectedAnimal = value; // Actualiza el animal seleccionado
-                      if (_selectedAnimal != null) {
-                        _showCuriosityCard = true; // Muestra la tarjeta de curiosidad al seleccionar un animal
-                      }
                     });
                   },
                   hint: const Text('Selecciona un animal'),
@@ -72,9 +70,8 @@ class _NuevaCuriosidadScreenState extends State<NuevaCuriosidadScreen> {
                 ElevatedButton(
                   onPressed: () {
                     if (_selectedAnimal != null) {
-                      setState(() {
-                        _showCuriosityCard = true; // Muestra la tarjeta de curiosidad al hacer clic en el botón "Enviar"
-                      });
+                      _showCuriosityCard = true; // Muestra la tarjeta de curiosidad al presionar el botón "Enviar"
+                      setState(() {});
                     }
                   },
                   child: const Text('Enviar'),
@@ -82,12 +79,11 @@ class _NuevaCuriosidadScreenState extends State<NuevaCuriosidadScreen> {
               ],
             ),
           ),
-          if (_showCuriosityCard && _selectedAnimal != null) // Muestra la tarjeta de curiosidad si _showCuriosityCard es true y _selectedAnimal no es nulo
+          if (_showCuriosityCard) // Muestra la tarjeta de curiosidad si _showCuriosityCard es true
             CuriosityCard(
               onClose: () {
-                setState(() {
-                  _showCuriosityCard = false; // Oculta la tarjeta de curiosidad cuando se cierra
-                });
+                _showCuriosityCard = false; // Oculta la tarjeta de curiosidad cuando se cierra
+                setState(() {});
               },
             ),
         ],
