@@ -1,7 +1,8 @@
+import 'package:curiosidadesanimalesmovil2/ui/usuario_contrasena.dart';
 import 'package:flutter/material.dart';
-import 'usuario_contrasena.dart';
-import 'register_page.dart';
-import 'cambio_contrasena.dart';
+import 'ui/register_page.dart'; // Asegúrate de usar la ruta correcta a tu archivo
+
+
 
 void main() {
   runApp(MyApp());

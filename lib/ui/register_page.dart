@@ -18,7 +18,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registro de Usuario'),
+        title: const Text('Registro de Usuario'),
       ),
       body: SingleChildScrollView( // Añadido para permitir desplazamiento si el contenido no cabe en la pantalla
         padding: const EdgeInsets.all(16.0),
@@ -28,39 +28,39 @@ class _RegisterPageState extends State<RegisterPage> {
           children: <Widget>[
             TextField(
               controller: _usernameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Usuario',
               ),
             ),
             TextField(
               controller: _firstNameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Nombre',
               ),
             ),
             TextField(
               controller: _lastNameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Apellido',
               ),
             ),
             TextField(
               controller: _emailController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Correo',
               ),
               keyboardType: TextInputType.emailAddress,
             ),
             TextField(
               controller: _passwordController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Contraseña',
               ),
               obscureText: true,
             ),
             TextField(
               controller: _confirmPasswordController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Confirmar Contraseña',
               ),
               obscureText: true,
