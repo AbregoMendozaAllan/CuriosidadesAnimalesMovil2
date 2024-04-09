@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "436102333886",
+    "firebase_url": "https://curiosidadesanimalesmovil2-default-rtdb.firebaseio.com",
+    "project_id": "curiosidadesanimalesmovil2",
+    "storage_bucket": "curiosidadesanimalesmovil2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:436102333886:android:70e59240a039e5dc3b65ef",
+        "android_client_info": {
+          "package_name": "com.iguana.curiosidadesanimalesmovil2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwqsTD8Qo5-Lz41cRUz1SvKSYmd07Rva4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
