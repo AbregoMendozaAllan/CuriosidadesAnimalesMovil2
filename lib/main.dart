@@ -1,4 +1,4 @@
-import 'package:curiosidadesanimalesmovil2/ui/login.dart';
+import 'package:curiosidadesanimalesmovil2/ui/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -13,7 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: FutureBuilder(
+      home: MainScreen()
+      /*FutureBuilder(
         future: _fbApp,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
             );
           }
         },
-      ),
+      ),*/
       /*LoginPage()*/
     );
   }

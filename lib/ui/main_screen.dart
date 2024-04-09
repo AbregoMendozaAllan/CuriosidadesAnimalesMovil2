@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'configuracion_screen.dart';
+import 'favoritos_screen.dart';
 import 'homescreen.dart';
 import 'NuevaCuriosidad.dart'; // Import NuevaCuriosidadScreen here
 
@@ -37,6 +39,10 @@ class _MainScreenState extends State<MainScreen> {
         return const MyHomePage(); // Load the HomeScreen widget for index 0
       case 1:
         return const NuevaCuriosidadScreen(); // Load NuevaCuriosidadScreen widget for index 1
+      case 2:
+        return const FavoritosScreen(); // Load NuevaCuriosidadScreen widget for index 1
+      case 3:
+        return const ConfiguracionScreen(); // Load NuevaCuriosidadScreen widget for index 1
       default:
         return Container(); // Placeholder for unknown index
     }
