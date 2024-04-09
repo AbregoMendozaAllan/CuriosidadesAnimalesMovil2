@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'components/bottom_navigation_bar.dart';
 import 'animalesfavoritos_screen.dart'; // Importa el archivo de la página de animales favoritos
 import 'curiosidadesfavoritas_screen.dart'; // Importa el archivo de la página de curiosidades favoritas
 
@@ -9,9 +8,7 @@ class FavoritosScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Favoritos'),
-      ),
+      // AppBar has been removed
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -54,12 +51,7 @@ class FavoritosScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavBar(
-        currentIndex: 0, // Puedes ajustar este índice según tus necesidades
-        onTap: (int index) {
-          // Lógica para manejar la navegación del BottomNavBar
-        },
-      ),
+      // BottomNavigationBar has been removed
     );
   }
 }

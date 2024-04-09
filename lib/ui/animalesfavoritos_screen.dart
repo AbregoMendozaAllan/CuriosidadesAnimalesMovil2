@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'components/bottom_navigation_bar.dart';
 
 class AnimalesFavoritosScreen extends StatefulWidget {
   const AnimalesFavoritosScreen({super.key});
@@ -24,9 +23,6 @@ class _AnimalesFavoritosScreenState extends State<AnimalesFavoritosScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Animales Favoritos'),
-      ),
       body: Column(
         children: [
           Expanded(
@@ -63,12 +59,6 @@ class _AnimalesFavoritosScreenState extends State<AnimalesFavoritosScreen> {
             child: const Text('Confirmar'),
           ),
         ],
-      ),
-      bottomNavigationBar: BottomNavBar(
-        currentIndex: 0, // Puedes ajustar este índice según tus necesidades
-        onTap: (int index) {
-          // Lógica para manejar la navegación del BottomNavBar
-        },
       ),
     );
   }

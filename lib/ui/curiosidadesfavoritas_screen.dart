@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'components/curiosidad_favorita.dart';
-import 'components/bottom_navigation_bar.dart';
 
 class CuriosidadesFavoritasScreen extends StatelessWidget {
   const CuriosidadesFavoritasScreen({super.key});
@@ -8,9 +7,6 @@ class CuriosidadesFavoritasScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Curiosidades Favoritas'),
-      ),
       body: Column(
         children: [
           Expanded(
@@ -331,12 +327,6 @@ class CuriosidadesFavoritasScreen extends StatelessWidget {
                 // Agrega más curiosidades favoritas según sea necesario
               ],
             ),
-          ),
-          BottomNavBar(
-            currentIndex: 0, // Puedes ajustar este índice según tus necesidades
-            onTap: (int index) {
-              // Lógica para manejar la navegación del BottomNavBar
-            },
           ),
         ],
       ),
