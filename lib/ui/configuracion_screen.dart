@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'cambio_contrasena.dart';
 
 class ConfiguracionScreen extends StatelessWidget {
-  const ConfiguracionScreen({super.key});
+  const ConfiguracionScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +44,20 @@ class ConfiguracionScreen extends StatelessWidget {
             const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
-                // Agregar lógica para confirmar datos
+                // Add logic to confirm data
               },
               child: const Text('Confirmar Datos'),
             ),
             const SizedBox(height: 10.0),
             ElevatedButton(
               onPressed: () {
-                // Agregar lógica para cambiar contraseña
+                // Open the CambioContrasenaPage as a modal bottom sheet
+                showModalBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return CambioContrasenaPage();
+                  },
+                );
               },
               child: const Text('Cambiar Contraseña'),
             ),

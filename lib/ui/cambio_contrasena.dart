@@ -38,7 +38,7 @@ class CambioContrasenaPage extends StatelessWidget {
           SizedBox(height: 20.0),
           ElevatedButton(
             onPressed: () {
-              // Agrega aquí la lógica para verificar la contraseña
+              Navigator.pop(context); // Go back to the previous screen
             },
             child: Text('Verificar'),
           ),

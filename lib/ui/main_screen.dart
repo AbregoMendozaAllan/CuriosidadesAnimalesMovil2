@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'configuracion_screen.dart';
-import 'favoritos_screen.dart';
-import 'homescreen.dart';
-import 'NuevaCuriosidad.dart'; // Import NuevaCuriosidadScreen here
+import '../data/main_routes.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -12,13 +9,13 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _selectedIndex = 0; // Default index of first screen
-  late List<String> _appBarTitles; // List to store app bar titles
+  late MainScreenLogic mainScreenLogic;
+  late List<String> _appBarTitles;
 
   @override
   void initState() {
     super.initState();
-    // Initialize the app bar titles based on bottom navigation bar labels
+    mainScreenLogic = MainScreenLogic();
     _appBarTitles = [
       'Home Screen',
       'Random',
@@ -29,55 +26,28 @@ class _MainScreenState extends State<MainScreen> {
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      mainScreenLogic.setSelectedIndex(index);
     });
-  }
-
-  Widget _getBodyWidget(int index) {
-    switch (index) {
-      case 0:
-        return const MyHomePage(); // Load the HomeScreen widget for index 0
-      case 1:
-        return const NuevaCuriosidadScreen(); // Load NuevaCuriosidadScreen widget for index 1
-      case 2:
-        return const FavoritosScreen(); // Load NuevaCuriosidadScreen widget for index 1
-      case 3:
-        return const ConfiguracionScreen(); // Load NuevaCuriosidadScreen widget for index 1
-      default:
-        return Container(); // Placeholder for unknown index
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_appBarTitles[_selectedIndex]), // Set the app bar title dynamically
-        backgroundColor: Colors.blue, // Set the background color to blue
+        title: Text(_appBarTitles[mainScreenLogic.selectedIndex]),
+        backgroundColor: Colors.blue,
       ),
-      body: _getBodyWidget(_selectedIndex), // Load body dynamically
+      body: mainScreenLogic.getBodyWidget(), // Directly using logic class method
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shuffle),
-            label: 'Random',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.star),
-            label: 'Favorites',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.shuffle), label: 'Random'),
+          BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favorites'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: mainScreenLogic.selectedIndex,
         selectedItemColor: Colors.amber[800],
-        unselectedItemColor: Colors.black, // Setting unselected icon color to black
+        unselectedItemColor: Colors.black,
         onTap: _onItemTapped,
       ),
     );
