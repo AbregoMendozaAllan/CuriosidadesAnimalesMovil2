@@ -7,9 +7,6 @@ class ConfiguracionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Configuración'),
-      ),
       body: Padding(
         padding: EdgeInsets.all(20.0),
         child: Column(
