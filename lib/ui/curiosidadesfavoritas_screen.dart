@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'components/curiosidad_favorita.dart';
-import 'components/bottom_navigation_bar.dart';
 
 class CuriosidadesFavoritasScreen extends StatelessWidget {
-  const CuriosidadesFavoritasScreen({super.key});
+  const CuriosidadesFavoritasScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,327 +15,23 @@ class CuriosidadesFavoritasScreen extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
+                // Your list of favorite curiosities widgets here
+                // For demonstration purposes, I'll include a sample CuriosidadFavorita widget
                 CuriosidadFavorita(
                   animalName: 'Perro',
                   curiosity: 'Los perros son leales a sus dueños.',
                   emoji: '🐶',
                   isFavorite: true,
                   onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del perro
+                    // Logic to handle favorite change
                     if (isFavorite) {
                       _showConfirmationDialog(context, 'Perro');
                     }
                   },
                 ),
-                CuriosidadFavorita(
-                  animalName: 'Gato',
-                  curiosity: 'Los gatos tienen nueve vidas.',
-                  emoji: '🐱',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del gato
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Gato');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Perro',
-                  curiosity: 'Los perros son leales a sus dueños.',
-                  emoji: '🐶',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del perro
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Perro');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Gato',
-                  curiosity: 'Los gatos tienen nueve vidas.',
-                  emoji: '🐱',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del gato
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Gato');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Perro',
-                  curiosity: 'Los perros son leales a sus dueños.',
-                  emoji: '🐶',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del perro
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Perro');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Gato',
-                  curiosity: 'Los gatos tienen nueve vidas.',
-                  emoji: '🐱',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del gato
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Gato');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Perro',
-                  curiosity: 'Los perros son leales a sus dueños.',
-                  emoji: '🐶',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del perro
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Perro');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Gato',
-                  curiosity: 'Los gatos tienen nueve vidas.',
-                  emoji: '🐱',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del gato
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Gato');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Perro',
-                  curiosity: 'Los perros son leales a sus dueños.',
-                  emoji: '🐶',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del perro
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Perro');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Gato',
-                  curiosity: 'Los gatos tienen nueve vidas.',
-                  emoji: '🐱',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del gato
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Gato');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Perro',
-                  curiosity: 'Los perros son leales a sus dueños.',
-                  emoji: '🐶',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del perro
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Perro');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Gato',
-                  curiosity: 'Los gatos tienen nueve vidas.',
-                  emoji: '🐱',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del gato
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Gato');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Perro',
-                  curiosity: 'Los perros son leales a sus dueños.',
-                  emoji: '🐶',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del perro
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Perro');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Gato',
-                  curiosity: 'Los gatos tienen nueve vidas.',
-                  emoji: '🐱',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del gato
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Gato');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Perro',
-                  curiosity: 'Los perros son leales a sus dueños.',
-                  emoji: '🐶',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del perro
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Perro');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Gato',
-                  curiosity: 'Los gatos tienen nueve vidas.',
-                  emoji: '🐱',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del gato
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Gato');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Perro',
-                  curiosity: 'Los perros son leales a sus dueños.',
-                  emoji: '🐶',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del perro
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Perro');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Gato',
-                  curiosity: 'Los gatos tienen nueve vidas.',
-                  emoji: '🐱',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del gato
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Gato');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Perro',
-                  curiosity: 'Los perros son leales a sus dueños.',
-                  emoji: '🐶',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del perro
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Perro');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Gato',
-                  curiosity: 'Los gatos tienen nueve vidas.',
-                  emoji: '🐱',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del gato
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Gato');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Perro',
-                  curiosity: 'Los perros son leales a sus dueños.',
-                  emoji: '🐶',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del perro
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Perro');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Gato',
-                  curiosity: 'Los gatos tienen nueve vidas.',
-                  emoji: '🐱',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del gato
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Gato');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Perro',
-                  curiosity: 'Los perros son leales a sus dueños.',
-                  emoji: '🐶',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del perro
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Perro');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Gato',
-                  curiosity: 'Los gatos tienen nueve vidas.',
-                  emoji: '🐱',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del gato
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Gato');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Perro',
-                  curiosity: 'Los perros son leales a sus dueños.',
-                  emoji: '🐶',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del perro
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Perro');
-                    }
-                  },
-                ),
-                CuriosidadFavorita(
-                  animalName: 'Gato',
-                  curiosity: 'Los gatos tienen nueve vidas.',
-                  emoji: '🐱',
-                  isFavorite: true,
-                  onFavoriteChanged: (bool isFavorite) {
-                    // Lógica para cambiar el estado de favorito del gato
-                    if (isFavorite) {
-                      _showConfirmationDialog(context, 'Gato');
-                    }
-                  },
-                ),
-                // Agrega más curiosidades favoritas según sea necesario
+                // Add more CuriosidadFavorita widgets as needed
               ],
             ),
-          ),
-          BottomNavBar(
-            currentIndex: 0, // Puedes ajustar este índice según tus necesidades
-            onTap: (int index) {
-              // Lógica para manejar la navegación del BottomNavBar
-            },
           ),
         ],
       ),
@@ -353,15 +48,14 @@ class CuriosidadesFavoritasScreen extends StatelessWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Cierra el diálogo sin eliminar la curiosidad
+                Navigator.of(context).pop(); // Close the dialog without deleting the curiosity
               },
               child: const Text('Cancelar'),
             ),
             TextButton(
               onPressed: () {
-                // Aquí iría la lógica para eliminar la curiosidad de favoritos
-                // Eliminar la curiosidad de favoritos
-                Navigator.of(context).pop(); // Cierra el diálogo
+                // Logic to remove the curiosity from favorites
+                Navigator.of(context).pop(); // Close the dialog
               },
               child: const Text('Eliminar'),
             ),
