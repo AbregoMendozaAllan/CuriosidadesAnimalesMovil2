@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:curiosidadesanimalesmovil2/data/database.dart';
+import 'package:curiosidadesanimalesmovil2/data/db.dart'; // Import the file where DatabaseController is defined
 import 'package:curiosidadesanimalesmovil2/ui/components/curiosity_card.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -26,68 +26,113 @@ class _NuevaCuriosidadScreenState extends State<NuevaCuriosidadScreen> {
   Future<void> _loadAnimalList() async {
     List<Map<String, dynamic>> animals = await DatabaseController.instance.queryAllAnimals();
     setState(() {
-      _animalList = animals.map((animal) => animal['nombreAnimal'] as String).toList();
+      _animalList = animals.map((animal) => animal['animalName'] as String).toList();
     });
   }
 
   Future<void> _loadRandomCuriosity() async {
-  List<Map<String, dynamic>> allCuriosities = [];
-  for (String animal in _animalList) {
-    List<Map<String, dynamic>> curiosities = await _getCuriositiesForSelectedRamdonAnimal(animal);
-    allCuriosities.addAll(curiosities);
-  }
-  
-  if (allCuriosities.isNotEmpty) {
-    Random random = Random();
-    int index = random.nextInt(allCuriosities.length);
+    // Clear the selected animal
     setState(() {
-      _selectedCuriosity = allCuriosities[index]['curiosidad'];
-      _showCuriosityCard = true;
+      _selectedAnimal = null;
     });
-    await _updateCuriosityState(); // Llama al método para actualizar el estado de la curiosidad
-  }
-}
 
-Future<List<Map<String, dynamic>>> _getCuriositiesForSelectedRamdonAnimal(String animal) async {
-  Database db = await DatabaseController.instance.database;
-  return await db.query('curiosidades',
-      where: 'idAnimal = ?',
-      whereArgs: [_animalList.indexOf(animal) + 1]);
-}
+    // Fetch all animals
+    List<Map<String, dynamic>> animals = await DatabaseController.instance.queryAllAnimals();
 
+    // Select a random animal
+    Random random = Random();
+    int animalIndex = random.nextInt(animals.length);
+    String randomAnimal = animals[animalIndex]['animalName'] as String;
 
-  Future<void> _loadRandomSelectCuriosity() async {
-    if (_selectedAnimal != null) {
-      List<Map<String, dynamic>> curiosities = await _getCuriositiesForSelectedAnimal();
-      if (curiosities.isNotEmpty) {
-        Random random = Random();
-        int index = random.nextInt(curiosities.length);
-        setState(() {
-          _selectedCuriosity = curiosities[index]['curiosidad'];
-          _showCuriosityCard = true;
-        });
-        await _updateCuriosityState(); // Llama al método para actualizar el estado de la curiosidad
+    // Fetch curiosities for the selected random animal
+    List<Map<String, dynamic>> curiosities = await _getCuriositiesForSelectedRandomAnimal(randomAnimal);
+    List<Map<String, dynamic>> filteredCuriosities = [];
+
+    // Filter out curiosities that are already favorites for the user
+    for (var curiosity in curiosities) {
+      bool isFavorite = await DatabaseController.instance.checkIfCuriosityIsFavorite(curiosity['curiosityID'], 'admin');
+      if (!isFavorite) {
+        filteredCuriosities.add(curiosity);
       }
+    }
+
+    if (filteredCuriosities.isNotEmpty) {
+      // Select a random curiosity from the filtered list
+      int index = random.nextInt(filteredCuriosities.length);
+      Map<String, dynamic> selectedCuriosity = filteredCuriosities[index];
+
+      setState(() {
+        _selectedCuriosity = selectedCuriosity['curiosity'];
+        _showCuriosityCard = true;
+      });
+
+      await _updateCuriosityState(); // Call the method to update the curiosity state
+    } else {
+      // If all curiosities are favorites, show a message or handle it accordingly
+      return;
     }
   }
 
-  Future<List<Map<String, dynamic>>> _getCuriositiesForSelectedAnimal() async {
+  Future<List<Map<String, dynamic>>> _getCuriositiesForSelectedRandomAnimal(String animal) async {
     Database db = await DatabaseController.instance.database;
-    return await db.query('curiosidades',
-        where: 'idAnimal = ?',
-        whereArgs: [_animalList.indexOf(_selectedAnimal!) + 1]);
+    return await db.query('Curiosity',
+        where: 'animalID = ?',
+        whereArgs: [_animalList.indexOf(animal) + 1]);
   }
+
   Future<void> _updateCuriosityState() async {
-  if (_selectedAnimal != null && _selectedCuriosity != null) {
-    Database db = await DatabaseController.instance.database;
-    await db.update(
-      'curiosidades',
-      {'estadoCuriosidad': 1},
-      where: 'curiosidad = ?',
-      whereArgs: [_selectedCuriosity],
-    );
+    if (_selectedAnimal != null && _selectedCuriosity != null) {
+      // Update the state of the selected curiosity
+    }
   }
-}
+
+  // newcode here
+
+  Future<void> _loadCuriosityForSelectedAnimal() async {
+    if (_selectedAnimal == null) {
+      return; // If no animal is selected, return
+    }
+
+    // Fetch curiosities for the selected animal
+    List<Map<String, dynamic>> curiosities = await _getCuriositiesForSelectedAnimal(_selectedAnimal!);
+    List<Map<String, dynamic>> filteredCuriosities = [];
+
+    // Filter out curiosities that are already favorites for the user
+    for (var curiosity in curiosities) {
+      bool isFavorite = await DatabaseController.instance.checkIfCuriosityIsFavorite(curiosity['curiosityID'], 'admin');
+      if (!isFavorite) {
+        filteredCuriosities.add(curiosity);
+      }
+    }
+
+    if (filteredCuriosities.isNotEmpty) {
+      // Select a random curiosity from the filtered list
+      Random random = Random();
+      int index = random.nextInt(filteredCuriosities.length);
+      Map<String, dynamic> selectedCuriosity = filteredCuriosities[index];
+
+      setState(() {
+        _selectedCuriosity = selectedCuriosity['curiosity'];
+        _showCuriosityCard = true;
+      });
+
+      await _updateCuriosityState(); // Call the method to update the curiosity state
+    } else {
+      // If all curiosities are favorites, show a message or handle it accordingly
+      return;
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> _getCuriositiesForSelectedAnimal(String animal) async {
+    Database db = await DatabaseController.instance.database;
+    return await db.query('Curiosity',
+        where: 'animalID = ?',
+        whereArgs: [_animalList.indexOf(animal) + 1]);
+  }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -107,43 +152,41 @@ Future<List<Map<String, dynamic>>> _getCuriositiesForSelectedRamdonAnimal(String
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                IconButton(
-                  icon: const Icon(Icons.shuffle),
-                  onPressed: _loadRandomCuriosity,
-                ),
                 DropdownButton<String>(
-                  items: _animalList.map((String value) {
+                  value: _selectedAnimal,
+                  items: _animalList.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
                     );
                   }).toList(),
-                  onChanged: (String? value) {
+                  onChanged: (String? newValue) {
                     setState(() {
-                      _selectedAnimal = value;
+                      _selectedAnimal = newValue;
                     });
                   },
-                  hint: const Text('Selecciona un animal'),
-                  value: _selectedAnimal,
                 ),
                 ElevatedButton(
-                  onPressed: _loadRandomSelectCuriosity,
-                  child: const Text('Enviar'),
+                  onPressed: _loadCuriosityForSelectedAnimal,
+                  child: Text('Enviar'),
+                ),
+                IconButton(
+                  icon: Icon(Icons.shuffle),
+                  onPressed: _loadRandomCuriosity,
                 ),
               ],
             ),
           ),
           if (_showCuriosityCard)
-  CuriosityCard(
-    animalName: '', emoji: '',
-    curiosity: _selectedCuriosity ?? '', // Pasa la curiosidad seleccionada al componente CuriosityCard
-    onClose: () {
-      setState(() {
-        _showCuriosityCard = false;
-      });
-    }, 
-  ),
-
+            CuriosityCard(
+              animalName: '', emoji: '',
+              curiosity: _selectedCuriosity ?? '', // Pass the selected curiosity to the CuriosityCard component
+              onClose: () {
+                setState(() {
+                  _showCuriosityCard = false;
+                });
+              },
+            ),
         ],
       ),
     );

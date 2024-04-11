@@ -1,19 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
-import 'package:curiosidadesanimalesmovil2/ui/main_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:curiosidadesanimalesmovil2/ui/login.dart';
+import 'package:curiosidadesanimalesmovil2/data/db.dart'; // Import the file where DatabaseController is defined
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MainScreen(),
+    return ChangeNotifierProvider(
+      create: (context) => UserIDProvider(),
+      child: MaterialApp(
+        home: LoginPage(), // Assuming LoginPage is your initial screen
+      ),
     );
+  }
+}
+
+class UserIDProvider extends ChangeNotifier {
+  String? userID; // User ID variable
+
+  void setUserID(String id) {
+    userID = id;
+    notifyListeners(); // Notify listeners about changes
   }
 }

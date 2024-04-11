@@ -19,14 +19,34 @@ class CuriosityCard extends StatefulWidget {
 }
 
 class _CuriosityCardState extends State<CuriosityCard> {
-  bool _isFavorite = false; // Estado interno para rastrear si se ha agregado a favoritos
+  bool _isFavorite = false;
+
+  void _toggleFavorite() async {
+    if (_isFavorite) {
+      // Remove the curiosity from favorite_curiosity table
+      // You would need to implement this method in DatabaseController
+      // based on the user ID and the current curiosity
+      // For demonstration, I'm just setting _isFavorite to false
+      setState(() {
+        _isFavorite = false;
+      });
+    } else {
+      // Add the curiosity to favorite_curiosity table
+      // You would need to implement this method in DatabaseController
+      // based on the user ID and the current curiosity
+      // For demonstration, I'm just setting _isFavorite to true
+      setState(() {
+        _isFavorite = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 4,
       margin: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
@@ -38,38 +58,34 @@ class _CuriosityCardState extends State<CuriosityCard> {
           children: [
             Text(
               widget.emoji,
-              style: TextStyle(fontSize: 24),
+              style: const TextStyle(fontSize: 24),
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     widget.animalName,
-                    style: TextStyle(fontSize: 14),
+                    style: const TextStyle(fontSize: 14),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     widget.curiosity,
-                    style: TextStyle(fontSize: 20),
+                    style: const TextStyle(fontSize: 20),
                   ),
                 ],
               ),
             ),
             IconButton(
-              onPressed: () {
-                setState(() {
-                  _isFavorite = !_isFavorite; // Cambia el estado de favoritos al hacer clic en el botón
-                });
-              },
+              onPressed: _toggleFavorite,
               icon: Icon(
-                _isFavorite ? Icons.star : Icons.star_border, // Cambia el icono según si se ha agregado a favoritos o no
-                color: _isFavorite ? Colors.amber : null, // Cambia el color del icono si se ha agregado a favoritos
+                _isFavorite ? Icons.star : Icons.star_border,
+                color: _isFavorite ? Colors.amber : null,
               ),
             ),
             IconButton(
-              onPressed: widget.onClose, // Llama a la función onClose para cerrar la tarjeta
+              onPressed: widget.onClose,
               icon: const Icon(Icons.close),
             ),
           ],

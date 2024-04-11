@@ -1,6 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:curiosidadesanimalesmovil2/ui/register_page.dart';
 import 'package:curiosidadesanimalesmovil2/ui/usuario_contrasena.dart';
-import 'package:flutter/material.dart';
+import 'package:curiosidadesanimalesmovil2/ui/main_screen.dart';
+import '../data/db.dart';
+import '../main.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -11,34 +15,37 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  void _showForgotPasswordDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Recuperar Contraseña'),
-        content: TextField(
-          controller: _usernameController, // Reutilizar el controlador de nombre de usuario para el email
-          decoration: const InputDecoration(
-            hintText: 'Email',
-          ),
-          keyboardType: TextInputType.emailAddress,
+  void _login(BuildContext context) async {
+    String username = _usernameController.text;
+    String password = _passwordController.text;
+
+    bool isValid = await DatabaseController.instance.validateUser(username, password);
+
+    if (isValid) {
+      // Get the UserIDProvider instance
+      var userIDProvider = Provider.of<UserIDProvider>(context, listen: false);
+      userIDProvider.setUserID(username); // Set the user ID
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainScreen()),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Login Failed'),
+          content: Text('Username or password is incorrect.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
         ),
-        actions: <Widget>[
-          TextButton(
-            child: Text('Cancelar'),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          TextButton(
-            child: Text('Enviar'),
-            onPressed: () {
-              // Aquí iría la lógica para manejar la recuperación de la contraseña
-              print('Solicitud de recuperación de contraseña para: ${_usernameController.text}');
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      ),
-    );
+      );
+    }
   }
 
   @override
@@ -67,9 +74,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                print('Usuario: ${_usernameController.text}, Contraseña: ${_passwordController.text}');
-              },
+              onPressed: () => _login(context),
               child: const Text('Iniciar Sesión'),
             ),
             TextButton(
@@ -81,7 +86,6 @@ class _LoginPageState extends State<LoginPage> {
               },
               child: const Text('Registrarse'),
             ),
-
             TextButton(
               onPressed: () {
                 Navigator.push(
