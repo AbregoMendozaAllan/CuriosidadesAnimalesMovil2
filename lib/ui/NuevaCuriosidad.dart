@@ -85,9 +85,6 @@ class _NuevaCuriosidadScreenState extends State<NuevaCuriosidadScreen> {
       // Update the state of the selected curiosity
     }
   }
-
-  // newcode here
-
   Future<void> _loadCuriosityForSelectedAnimal() async {
     if (_selectedAnimal == null) {
       return; // If no animal is selected, return
@@ -129,8 +126,6 @@ class _NuevaCuriosidadScreenState extends State<NuevaCuriosidadScreen> {
         where: 'animalID = ?',
         whereArgs: [_animalList.indexOf(animal) + 1]);
   }
-
-
 
 
 
