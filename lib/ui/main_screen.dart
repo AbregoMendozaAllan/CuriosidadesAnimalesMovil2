@@ -41,7 +41,7 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.shuffle), label: 'Random'),
+          BottomNavigationBarItem(icon: Icon(Icons.add_circle_outline), label: 'Random'),
           BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favorites'),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
         ],

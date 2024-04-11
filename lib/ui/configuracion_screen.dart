@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'cambio_contrasena.dart';
+import 'cambio_contrasena.dart'; // Make sure this import is correct
 
 class ConfiguracionScreen extends StatelessWidget {
   const ConfiguracionScreen({Key? key}) : super(key: key);
@@ -8,9 +8,9 @@ class ConfiguracionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        padding: const EdgeInsets.all(20.0),
+        child: ListView(
+          // Removed the CrossAxisAlignment as ListView children are stretched by default
           children: [
             const Text(
               'Configuración',
@@ -41,14 +41,13 @@ class ConfiguracionScreen extends StatelessWidget {
             const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
-                // Add logic to confirm data
+                // Logic to confirm data can be added here
               },
               child: const Text('Confirmar Datos'),
             ),
             const SizedBox(height: 10.0),
             ElevatedButton(
               onPressed: () {
-                // Open the CambioContrasenaPage as a modal bottom sheet
                 showModalBottomSheet(
                   context: context,
                   builder: (BuildContext context) {
