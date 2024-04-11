@@ -2,8 +2,17 @@ import 'package:flutter/material.dart';
 
 class CuriosityCard extends StatefulWidget {
   final VoidCallback onClose;
+  final String animalName;
+  final String emoji;
+  final String curiosity;
 
-  const CuriosityCard({Key? key, required this.onClose}) : super(key: key);
+  const CuriosityCard({
+    Key? key,
+    required this.onClose,
+    required this.animalName,
+    required this.emoji,
+    required this.curiosity,
+  }) : super(key: key);
 
   @override
   _CuriosityCardState createState() => _CuriosityCardState();
@@ -27,6 +36,27 @@ class _CuriosityCardState extends State<CuriosityCard> {
         padding: const EdgeInsets.all(16.0),
         child: Row(
           children: [
+            Text(
+              widget.emoji,
+              style: TextStyle(fontSize: 24),
+            ),
+            SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.animalName,
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    widget.curiosity,
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ],
+              ),
+            ),
             IconButton(
               onPressed: () {
                 setState(() {
@@ -36,12 +66,6 @@ class _CuriosityCardState extends State<CuriosityCard> {
               icon: Icon(
                 _isFavorite ? Icons.star : Icons.star_border, // Cambia el icono según si se ha agregado a favoritos o no
                 color: _isFavorite ? Colors.amber : null, // Cambia el color del icono si se ha agregado a favoritos
-              ),
-            ),
-            const Expanded(
-              child: Text(
-                'Esta es la curiosidad',
-                style: TextStyle(fontSize: 20),
               ),
             ),
             IconButton(

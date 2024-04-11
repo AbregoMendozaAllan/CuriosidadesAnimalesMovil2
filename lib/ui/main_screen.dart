@@ -40,17 +40,10 @@ class _MainScreenState extends State<MainScreen> {
       body: mainScreenLogic.getBodyWidget(), // Directly using logic class method
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-<<<<<<< HEAD
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
           BottomNavigationBarItem(icon: Icon(Icons.add_circle_outline), label: 'Nuevo'),
           BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favoritos'),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Configuración'),
-=======
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.add_circle_outline), label: 'Random'),
-          BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favorites'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
->>>>>>> 89628f286863735ce8f143a99cf9e26547d98344
         ],
         currentIndex: mainScreenLogic.selectedIndex,
         selectedItemColor: Colors.amber[800],
