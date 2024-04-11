@@ -15,7 +15,8 @@ class _NuevaCuriosidadScreenState extends State<NuevaCuriosidadScreen> {
   String? _selectedAnimal;
   List<String> _animalList = [];
   bool _showCuriosityCard = false;
-  String? _selectedCuriosity;
+  Map<String, dynamic>? _selectedCuriosity;
+  List<Map<String, dynamic>> _allCuriosities = [];
 
   @override
   void initState() {
@@ -31,63 +32,74 @@ class _NuevaCuriosidadScreenState extends State<NuevaCuriosidadScreen> {
   }
 
   Future<void> _loadRandomCuriosity() async {
-  List<Map<String, dynamic>> allCuriosities = [];
-  for (String animal in _animalList) {
-    List<Map<String, dynamic>> curiosities = await _getCuriositiesForSelectedRamdonAnimal(animal);
-    allCuriosities.addAll(curiosities);
-  }
-  
-  if (allCuriosities.isNotEmpty) {
-    Random random = Random();
-    int index = random.nextInt(allCuriosities.length);
     setState(() {
-      _selectedCuriosity = allCuriosities[index]['curiosidad'];
-      _showCuriosityCard = true;
+      _selectedAnimal = null;
     });
-    await _updateCuriosityState(); // Llama al método para actualizar el estado de la curiosidad
+
+    _allCuriosities.clear();
+
+    for (String animal in _animalList) {
+      List<Map<String, dynamic>> curiosities = await _getCuriositiesForSelectedRandomAnimal(animal);
+      _allCuriosities.addAll(curiosities);
+    }
+    
+    if (_allCuriosities.isNotEmpty) {
+      Random random = Random();
+      int index = random.nextInt(_allCuriosities.length);
+      setState(() {
+        _selectedCuriosity = _allCuriosities[index];
+        _showCuriosityCard = true;
+      });
+      await _updateCuriosityState();
+    }
   }
-}
 
-Future<List<Map<String, dynamic>>> _getCuriositiesForSelectedRamdonAnimal(String animal) async {
-  Database db = await DatabaseController.instance.database;
-  return await db.query('curiosidades',
-      where: 'idAnimal = ?',
-      whereArgs: [_animalList.indexOf(animal) + 1]);
-}
+  Future<List<Map<String, dynamic>>> _getCuriositiesForSelectedRandomAnimal(String animal) async {
+    Database db = await DatabaseController.instance.database;
+    return await db.rawQuery('''
+      SELECT c.curiosidad, a.nombreAnimal, a.emojiAnimal 
+      FROM curiosidades c 
+      INNER JOIN animales a ON a.idAnimal = c.idAnimal 
+      WHERE c.idAnimal = ?
+    ''', [_animalList.indexOf(animal) + 1]);
+  }
 
-
-  Future<void> _loadRandomSelectCuriosity() async {
+  Future<void> _loadSelectCuriosity() async {
     if (_selectedAnimal != null) {
       List<Map<String, dynamic>> curiosities = await _getCuriositiesForSelectedAnimal();
       if (curiosities.isNotEmpty) {
         Random random = Random();
         int index = random.nextInt(curiosities.length);
         setState(() {
-          _selectedCuriosity = curiosities[index]['curiosidad'];
+          _selectedCuriosity = curiosities[index];
           _showCuriosityCard = true;
         });
-        await _updateCuriosityState(); // Llama al método para actualizar el estado de la curiosidad
+        await _updateCuriosityState();
       }
     }
   }
 
   Future<List<Map<String, dynamic>>> _getCuriositiesForSelectedAnimal() async {
     Database db = await DatabaseController.instance.database;
-    return await db.query('curiosidades',
-        where: 'idAnimal = ?',
-        whereArgs: [_animalList.indexOf(_selectedAnimal!) + 1]);
+    return await db.rawQuery('''
+      SELECT c.curiosidad, a.nombreAnimal, a.emojiAnimal 
+      FROM curiosidades c 
+      INNER JOIN animales a ON a.idAnimal = c.idAnimal 
+      WHERE c.idAnimal = ?
+    ''', [_animalList.indexOf(_selectedAnimal!) + 1]);
   }
+
   Future<void> _updateCuriosityState() async {
-  if (_selectedAnimal != null && _selectedCuriosity != null) {
-    Database db = await DatabaseController.instance.database;
-    await db.update(
-      'curiosidades',
-      {'estadoCuriosidad': 1},
-      where: 'curiosidad = ?',
-      whereArgs: [_selectedCuriosity],
-    );
+    if (_selectedAnimal != null && _selectedCuriosity != null) {
+      Database db = await DatabaseController.instance.database;
+      await db.update(
+        'curiosidades',
+        {'estadoCuriosidad': 1},
+        where: 'curiosidad = ?',
+        whereArgs: [_selectedCuriosity!['curiosidad']],
+      );
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -127,23 +139,23 @@ Future<List<Map<String, dynamic>>> _getCuriositiesForSelectedRamdonAnimal(String
                   value: _selectedAnimal,
                 ),
                 ElevatedButton(
-                  onPressed: _loadRandomSelectCuriosity,
+                  onPressed: _loadSelectCuriosity,
                   child: const Text('Enviar'),
                 ),
               ],
             ),
           ),
-          if (_showCuriosityCard)
-  CuriosityCard(
-    animalName: '', emoji: '',
-    curiosity: _selectedCuriosity ?? '', // Pasa la curiosidad seleccionada al componente CuriosityCard
-    onClose: () {
-      setState(() {
-        _showCuriosityCard = false;
-      });
-    }, 
-  ),
-
+          if (_showCuriosityCard && _selectedCuriosity != null)
+            CuriosityCard(
+              animalName: _selectedCuriosity!['nombreAnimal'] ?? '',
+              emoji: _selectedCuriosity!['emojiAnimal'] ?? '',
+              curiosity: _selectedCuriosity!['curiosidad'] ?? '',
+              onClose: () {
+                setState(() {
+                  _showCuriosityCard = false;
+                });
+              }, 
+            ),
         ],
       ),
     );
