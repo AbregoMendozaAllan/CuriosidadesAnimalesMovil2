@@ -1,14 +1,15 @@
-// nuevaCuriosidad.dart
-
-import 'package:flutter/material.dart';
 import 'package:curiosidadesanimalesmovil2/data/database.dart';
 import 'package:curiosidadesanimalesmovil2/ui/components/curiosity_card.dart';
+import 'package:flutter/material.dart';
+import '../ui/components/bottom_navigation_bar.dart';
+import '../ui/components/curiosity_card.dart'; // Importa el archivo curiosity_card.dart
 
 class NuevaCuriosidadScreen extends StatefulWidget {
   const NuevaCuriosidadScreen({Key? key}) : super(key: key);
 
   @override
-  _NuevaCuriosidadScreenState createState() => _NuevaCuriosidadScreenState();
+  _NuevaCuriosidadScreenState createState() =>
+      _NuevaCuriosidadScreenState();
 }
 
 class _NuevaCuriosidadScreenState extends State<NuevaCuriosidadScreen> {
