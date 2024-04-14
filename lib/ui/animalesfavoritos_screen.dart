@@ -1,74 +1,120 @@
 import 'package:flutter/material.dart';
-import 'components/bottom_navigation_bar.dart';
+import '../data/database_controller.dart';
 
 class AnimalesFavoritosScreen extends StatefulWidget {
-  const AnimalesFavoritosScreen({super.key});
+  final String userId;
+
+  const AnimalesFavoritosScreen({Key? key, required this.userId}) : super(key: key);
 
   @override
   _AnimalesFavoritosScreenState createState() => _AnimalesFavoritosScreenState();
 }
 
 class _AnimalesFavoritosScreenState extends State<AnimalesFavoritosScreen> {
-  final List<String> _animalesSeleccionados = []; // Lista para almacenar los animales seleccionados
+  late List<Map<String, dynamic>> _favoriteAnimals;
+  late List<Map<String, dynamic>> _allAnimals;
+  late DatabaseController _dbController;
 
-  // Lista de animales
-  final List<String> _listaAnimales = [
-    'Perro', 'Gato', 'Pájaro', 'León', 'Tigre', 'Elefante', 'Oso', 'Cebra', 'Jirafa', // Lista inicial
-    'Zorro', 'Canguro', 'Delfín', 'Ballena', 'Hipopótamo', 'Mono', 'Cocodrilo', 'Tortuga', 'Pez', // Nuevos animales
-    'Panda', 'Aguila', 'Pavo real', 'Conejo', 'Koala', 'Suricata', 'Rinoceronte', 'Zebra', 'Lobo', // Nuevos animales
-    'Nutria', 'Mapache', 'Castor', 'Camello', 'Foca', 'Pulpo', 'Calamar', 'Pinguino', 'Pingüino', // Nuevos animales
-    'Avestruz', 'Cebra', 'Coyote', 'Chita', 'Guepardo', 'Iguana', 'Búho', 'Aguila', 'Caracol', // Nuevos animales
-    'Rana', 'Serpiente', 'Erizo', 'Cabra', 'Ornitorrinco', 'Suricata', 'Puma', 'Papagayo', 'Ratón', // Nuevos animales
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _favoriteAnimals = [];
+    _allAnimals = [];
+    _dbController = DatabaseController.instance;
+    _fetchFavoriteAnimals();
+    _fetchAllAnimals();
+  }
+
+  Future<void> _fetchFavoriteAnimals() async {
+    final favoriteAnimals = await _dbController.getFavoriteAnimalsForUser(widget.userId);
+    setState(() {
+      _favoriteAnimals = favoriteAnimals;
+    });
+  }
+
+  Future<void> _fetchAllAnimals() async {
+    final allAnimals = await _dbController.getAllAnimals();
+    setState(() {
+      _allAnimals = allAnimals;
+    });
+  }
+
+  void _toggleFavoriteAnimal(int animalID, bool newValue) {
+    setState(() {
+      if (newValue) {
+        _favoriteAnimals = [..._favoriteAnimals, _allAnimals.firstWhere((animal) => animal['animalID'] == animalID)];
+      } else {
+        _favoriteAnimals = _favoriteAnimals.where((favAnimal) => favAnimal['animalID'] != animalID).toList();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Animales Favoritos'),
+        title: const Text("Select Favorite Animals"),
       ),
       body: Column(
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: _listaAnimales.length,
+              itemCount: _allAnimals.length,
               itemBuilder: (context, index) {
-                final animal = _listaAnimales[index];
-                final isChecked = _animalesSeleccionados.contains(animal);
-
+                final animal = _allAnimals[index];
+                final isChecked = _favoriteAnimals.any((favAnimal) => favAnimal['animalID'] == animal['animalID']);
                 return CheckboxListTile(
-                  controlAffinity: ListTileControlAffinity.leading, // Mueve el checkbox a la izquierda
-                  title: Text(animal),
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: Row(
+                    children: [
+                      Text(animal['animalEmoji'] + ' '), // Display the animal emoji
+                      Text(animal['animalName']),
+                    ],
+                  ),
                   value: isChecked,
-                  dense: true, // Reduce el espacio entre elementos de la lista
                   onChanged: (bool? value) {
-                    setState(() {
-                      if (value != null && value) {
-                        _animalesSeleccionados.add(animal); // Agregar el animal seleccionado
-                      } else {
-                        _animalesSeleccionados.remove(animal); // Remover el animal no seleccionado
-                      }
-                    });
+                    if (value != null) {
+                      _toggleFavoriteAnimal(animal['animalID'], value);
+                    }
                   },
                 );
               },
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              // Lógica para confirmar la selección de animales favoritos
-              // Puedes imprimir la lista de animales seleccionados o ejecutar cualquier otra acción aquí
-              print('Animales seleccionados: $_animalesSeleccionados');
-            },
-            child: const Text('Confirmar'),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20), // Add bottom margin
+            child: ElevatedButton(
+              onPressed: () async {
+                List<int> favoriteAnimalIDs = [];
+                for (var animal in _allAnimals) {
+                  bool isChecked = _favoriteAnimals.any((favAnimal) => favAnimal['animalID'] == animal['animalID']);
+                  if (isChecked) {
+                    favoriteAnimalIDs.add(animal['animalID']);
+                  }
+                }
+
+                try {
+                  await _dbController.updateFavoriteAnimals(widget.userId, favoriteAnimalIDs);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Favorite animals updated successfully!'),
+                    ),
+                  );
+                  // Navigate back to the previous screen
+                  Navigator.pop(context);
+                } catch (e) {
+                  print('Error updating favorite animals: $e');
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Failed to update favorite animals.'),
+                    ),
+                  );
+                }
+              },
+              child: const Text('Confirmar'),
+            ),
           ),
         ],
-      ),
-      bottomNavigationBar: BottomNavBar(
-        currentIndex: 0, // Puedes ajustar este índice según tus necesidades
-        onTap: (int index) {
-          // Lógica para manejar la navegación del BottomNavBar
-        },
       ),
     );
   }
