@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'animalesfavoritos_screen.dart'; // Import the modal screen
-import 'curiosidadesfavoritas_screen.dart'; // Import the CuriosidadesFavoritasScreen
+import 'animalesfavoritos_screen.dart';
+import 'curiosidadesfavoritas_screen.dart';
 
 class FavoritosScreen extends StatelessWidget {
-  const FavoritosScreen({Key? key}) : super(key: key);
+  final String userId; // Add userId property
+
+  const FavoritosScreen({Key? key, required this.userId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Favoritos'),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -20,7 +19,9 @@ class FavoritosScreen extends StatelessWidget {
                 // Open the modal screen for selecting favorite animals
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const AnimalesFavoritosScreen()),
+                  MaterialPageRoute(
+                    builder: (context) => AnimalesFavoritosScreen(userId: userId), // Pass userId
+                  ),
                 );
               },
               child: const Text('Animales Favoritos'),

@@ -1,8 +1,11 @@
+// MainScreen.dart
 import 'package:flutter/material.dart';
 import '../data/main_routes.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  final String userId; // Add userId property
+
+  const MainScreen({Key? key, required this.userId}) : super(key: key);
 
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -10,18 +13,11 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   late MainScreenLogic mainScreenLogic;
-  late List<String> _appBarTitles;
 
   @override
   void initState() {
     super.initState();
-    mainScreenLogic = MainScreenLogic();
-    _appBarTitles = [
-      'Home Screen',
-      'Random',
-      'Favorites',
-      'Settings',
-    ];
+    mainScreenLogic = MainScreenLogic(userId: widget.userId); // Initialize MainScreenLogic with userId
   }
 
   void _onItemTapped(int index) {
@@ -34,10 +30,10 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_appBarTitles[mainScreenLogic.selectedIndex]),
+        title: Text(mainScreenLogic.appBarTitle), // Use the title from mainScreenLogic
         backgroundColor: Colors.blue,
       ),
-      body: mainScreenLogic.getBodyWidget(), // Directly using logic class method
+      body: mainScreenLogic.getBodyWidget(),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),

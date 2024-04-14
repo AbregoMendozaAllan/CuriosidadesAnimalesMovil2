@@ -1,35 +1,18 @@
-import 'package:curiosidadesanimalesmovil2/ui/main_screen.dart';
+import 'package:curiosidadesanimalesmovil2/ui/login.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'data/database_controller.dart';
 
-
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await DatabaseController.instance.database; // Ensure the database is initialized before running the app
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MainScreen()
-      /*FutureBuilder(
-        future: _fbApp,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            print ('You have an error! ${snapshot.error.toString()}');
-            return  Text('Something went wrong!');
-            } else if (snapshot.hasData) {
-              return LoginPage();
-            } else {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),*/
-      /*LoginPage()*/
+      home: LoginPage(), // Start with LoginPage instead of MainScreen
     );
   }
 }

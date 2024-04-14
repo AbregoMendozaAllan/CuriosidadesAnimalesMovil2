@@ -1,33 +1,54 @@
-import 'package:flutter/cupertino.dart';
-
+import 'package:flutter/material.dart';
 import '../ui/NuevaCuriosidad.dart';
 import '../ui/configuracion_screen.dart';
 import '../ui/favoritos_screen.dart';
 import '../ui/homescreen.dart';
 
 class MainScreenLogic {
-  int _selectedIndex = 0;
+  late int _selectedIndex;
+  late String _appBarTitle;
+  final String userId;
+
+  MainScreenLogic({required this.userId}) {
+    _selectedIndex = 0;
+    _appBarTitle = 'Home Screen';
+  }
 
   int get selectedIndex => _selectedIndex;
+  String get appBarTitle => _appBarTitle;
 
   void setSelectedIndex(int index) {
     _selectedIndex = index;
+    switch (index) {
+      case 0:
+        _appBarTitle = 'Home Screen';
+        break;
+      case 1:
+        _appBarTitle = 'Random';
+        break;
+      case 2:
+        _appBarTitle = 'Favorites';
+        break;
+      case 3:
+        _appBarTitle = 'Settings';
+        break;
+      default:
+        _appBarTitle = 'Unknown';
+    }
   }
 
   Widget getBodyWidget() {
     switch (_selectedIndex) {
       case 0:
-        return const MyHomePage();
+        return MyHomePage();
       case 1:
-        return const NuevaCuriosidadScreen();
+        return NuevaCuriosidadScreen(userId: userId);
       case 2:
-        return const FavoritosScreen();
+        return FavoritosScreen(userId: userId);
       case 3:
-        return const ConfiguracionScreen();
+        return ConfiguracionScreen(userId: userId);
       default:
-        return Container(); // A fallback, though this should ideally never be reached.
+        return Container();
     }
   }
-
-// Add more logic functions here as needed
 }

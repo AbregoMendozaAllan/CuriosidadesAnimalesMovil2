@@ -1,56 +1,88 @@
 import 'package:flutter/material.dart';
+import '../../data/database_controller.dart';
 
-class CuriosityCard extends StatefulWidget {
-  final VoidCallback onClose;
+class FunFactCard extends StatefulWidget {
+  final Map<String, dynamic>? funFactData; // Make funFactData nullable
+  final Function onClose;
 
-  const CuriosityCard({Key? key, required this.onClose}) : super(key: key);
+  const FunFactCard({Key? key, this.funFactData, required this.onClose}) : super(key: key);
 
   @override
-  _CuriosityCardState createState() => _CuriosityCardState();
+  _FunFactCardState createState() => _FunFactCardState();
 }
 
-class _CuriosityCardState extends State<CuriosityCard> {
-  bool _isFavorite = false; // Estado interno para rastrear si se ha agregado a favoritos
+class _FunFactCardState extends State<FunFactCard> {
+  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
+    if (widget.funFactData == null) { // Check if funFactData is null
+      return Container(); // Return an empty container or handle null case appropriately
+    }
+
+    // If funFactData is not null, continue building the widget
     return Card(
-      elevation: 4,
-      margin: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
-      ),
+      margin: EdgeInsets.all(16.0),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  _isFavorite = !_isFavorite; // Cambia el estado de favoritos al hacer clic en el botón
-                });
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    widget.onClose(); // Call the onClose callback to close the card
+                  },
+                  icon: Icon(Icons.close),
+                ),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      isFavorite = !isFavorite; // Toggle the favorite status
+                    });
+                  },
+                  icon: Icon(
+                    isFavorite ? Icons.star : Icons.star_border,
+                    color: isFavorite ? Colors.amber : null,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              widget.funFactData!['curiosity'], // Display the fun fact
+              style: TextStyle(fontSize: 16.0),
+            ),
+            SizedBox(height: 16.0),
+            FutureBuilder<Map<String, dynamic>>(
+              future: getAnimalData(widget.funFactData!['animalID']), // Use ! to access non-null funFactData
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Text(
+                    snapshot.data!['animalEmoji'], // Display the emoji
+                    style: TextStyle(fontSize: 24.0),
+                  );
+                } else {
+                  return CircularProgressIndicator(); // Show loading indicator while fetching data
+                }
               },
-              icon: Icon(
-                _isFavorite ? Icons.star : Icons.star_border, // Cambia el icono según si se ha agregado a favoritos o no
-                color: _isFavorite ? Colors.amber : null, // Cambia el color del icono si se ha agregado a favoritos
-              ),
-            ),
-            const Expanded(
-              child: Text(
-                'Esta es la curiosidad',
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-            IconButton(
-              onPressed: widget.onClose, // Llama a la función onClose para cerrar la tarjeta
-              icon: const Icon(Icons.close),
             ),
           ],
         ),
       ),
     );
+  }
+
+  // Function to get animal data from the database controller
+  Future<Map<String, dynamic>> getAnimalData(int animalID) async {
+    final db = await DatabaseController.instance.database;
+    final result = await db.query(
+      'animals',
+      where: 'animalID = ?',
+      whereArgs: [animalID],
+    );
+    return result.first;
   }
 }
