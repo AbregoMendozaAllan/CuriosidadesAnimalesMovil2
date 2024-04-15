@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../data/database_controller.dart';
 
 class CambioContrasenaPage extends StatefulWidget {
-  final String userId; // Add userId property
+  final String userId;
 
   const CambioContrasenaPage({Key? key, required this.userId}) : super(key: key);
 
@@ -29,7 +29,7 @@ class _CambioContrasenaPageState extends State<CambioContrasenaPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: ListView( // Wrap with ListView
+        child: ListView( 
           children: [
             const Padding(
               padding: EdgeInsets.all(20.0),
@@ -113,7 +113,7 @@ class _CambioContrasenaPageState extends State<CambioContrasenaPage> {
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
-              Navigator.of(context).pop(); // Pop twice to go back to the settings screen
+              Navigator.of(context).pop(); 
             },
             child: Text('OK'),
           ),

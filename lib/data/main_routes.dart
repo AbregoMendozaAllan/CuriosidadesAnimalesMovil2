@@ -11,7 +11,7 @@ class MainScreenLogic {
 
   MainScreenLogic({required this.userId}) {
     _selectedIndex = 0;
-    _appBarTitle = 'Home Screen';
+    _appBarTitle = 'Inicio';
   }
 
   int get selectedIndex => _selectedIndex;
@@ -21,16 +21,16 @@ class MainScreenLogic {
     _selectedIndex = index;
     switch (index) {
       case 0:
-        _appBarTitle = 'Home Screen';
+        _appBarTitle = 'Inicio';
         break;
       case 1:
-        _appBarTitle = 'Random';
+        _appBarTitle = 'Nueva Curiosidad';
         break;
       case 2:
-        _appBarTitle = 'Favorites';
+        _appBarTitle = 'Favoritos';
         break;
       case 3:
-        _appBarTitle = 'Settings';
+        _appBarTitle = 'Configuración';
         break;
       default:
         _appBarTitle = 'Unknown';
@@ -40,7 +40,7 @@ class MainScreenLogic {
   Widget getBodyWidget() {
     switch (_selectedIndex) {
       case 0:
-        return MyHomePage();
+        return MyHomePage(userId: userId);
       case 1:
         return NuevaCuriosidadScreen(userId: userId);
       case 2:

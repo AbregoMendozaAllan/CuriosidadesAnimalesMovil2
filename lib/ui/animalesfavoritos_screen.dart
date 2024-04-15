@@ -67,7 +67,7 @@ class _AnimalesFavoritosScreenState extends State<AnimalesFavoritosScreen> {
                   controlAffinity: ListTileControlAffinity.leading,
                   title: Row(
                     children: [
-                      Text(animal['animalEmoji'] + ' '), // Display the animal emoji
+                      Text(animal['animalEmoji'] + ' '), 
                       Text(animal['animalName']),
                     ],
                   ),
@@ -82,7 +82,7 @@ class _AnimalesFavoritosScreenState extends State<AnimalesFavoritosScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 20), // Add bottom margin
+            padding: const EdgeInsets.only(bottom: 20), 
             child: ElevatedButton(
               onPressed: () async {
                 List<int> favoriteAnimalIDs = [];
@@ -97,10 +97,9 @@ class _AnimalesFavoritosScreenState extends State<AnimalesFavoritosScreen> {
                   await _dbController.updateFavoriteAnimals(widget.userId, favoriteAnimalIDs);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Favorite animals updated successfully!'),
+                      content: Text('¡Animales favoritos actualizados exitosamente!'),
                     ),
                   );
-                  // Navigate back to the previous screen
                   Navigator.pop(context);
                 } catch (e) {
                   print('Error updating favorite animals: $e');

@@ -28,7 +28,6 @@ class UsuarioContrasenaPage extends StatelessWidget {
             SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
-                // Agrega aquí la lógica para verificar el usuario
               },
               child: Text('Verificar'),
             ),

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'animalesfavoritos_screen.dart';
 import 'curiosidadesfavoritas_screen.dart';
 
 class FavoritosScreen extends StatelessWidget {
-  final String userId; // Add userId property
+  final String userId;  
 
   const FavoritosScreen({Key? key, required this.userId}) : super(key: key);
 
@@ -16,11 +17,10 @@ class FavoritosScreen extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                // Open the modal screen for selecting favorite animals
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AnimalesFavoritosScreen(userId: userId), // Pass userId
+                    builder: (context) => AnimalesFavoritosScreen(userId: userId),
                   ),
                 );
               },
@@ -29,10 +29,9 @@ class FavoritosScreen extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Open the modal screen for favorite curiosities
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const CuriosidadesFavoritasScreen()),
+                  MaterialPageRoute(builder: (context) => CuriosidadesFavoritasScreen(userId: userId)),
                 );
               },
               child: const Text('Curiosidades Favoritas'),

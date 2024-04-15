@@ -4,7 +4,7 @@ import '../data/database_controller.dart';
 import 'login.dart';
 
 class ConfiguracionScreen extends StatefulWidget {
-  final String userId; // Add userId property
+  final String userId; 
 
   const ConfiguracionScreen({Key? key, required this.userId}) : super(key: key);
 
@@ -19,7 +19,7 @@ class _ConfiguracionScreenState extends State<ConfiguracionScreen> {
   late bool _isEditingName;
   late bool _isEditingLastName;
   late bool _isEditingEmail;
-  bool _changesMade = false; // Flag to track changes
+  bool _changesMade = false; 
 
   @override
   void initState() {
@@ -34,7 +34,6 @@ class _ConfiguracionScreenState extends State<ConfiguracionScreen> {
   }
 
   Future<void> _fetchUserData() async {
-    // Fetch user data from the database for the currently signed-in user
     final userData = await DatabaseController.instance.getUserData(widget.userId);
     if (userData != null) {
       setState(() {
@@ -46,7 +45,6 @@ class _ConfiguracionScreenState extends State<ConfiguracionScreen> {
   }
 
   Future<void> _updateUserData() async {
-    // Update user data in the database
     await DatabaseController.instance.updateUserData(
       widget.userId,
       _nameController.text,
@@ -59,14 +57,14 @@ class _ConfiguracionScreenState extends State<ConfiguracionScreen> {
       ),
     );
     setState(() {
-      _changesMade = false; // Reset changesMade flag after updating data
+      _changesMade = false; 
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView( // Wrap with SingleChildScrollView
+      body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(20.0),
           child: Column(
@@ -81,36 +79,35 @@ class _ConfiguracionScreenState extends State<ConfiguracionScreen> {
               _buildEditableField('Nombre', _nameController, _isEditingName, () {
                 setState(() {
                   _isEditingName = !_isEditingName;
-                  _changesMade = true; // Set changesMade flag when editing
+                  _changesMade = true; 
                 });
               }),
               const SizedBox(height: 10.0),
               _buildEditableField('Apellido', _lastNameController, _isEditingLastName, () {
                 setState(() {
                   _isEditingLastName = !_isEditingLastName;
-                  _changesMade = true; // Set changesMade flag when editing
+                  _changesMade = true; 
                 });
               }),
               const SizedBox(height: 10.0),
               _buildEditableField('Correo', _emailController, _isEditingEmail, () {
                 setState(() {
                   _isEditingEmail = !_isEditingEmail;
-                  _changesMade = true; // Set changesMade flag when editing
+                  _changesMade = true; 
                 });
               }),
               const SizedBox(height: 20.0),
               ElevatedButton(
-                onPressed: _changesMade ? _updateUserData : null, // Enable button only if changesMade is true
+                onPressed: _changesMade ? _updateUserData : null, 
                 child: const Text('Confirmar Datos'),
               ),
               const SizedBox(height: 10.0),
               ElevatedButton(
                 onPressed: () {
-                  // Open the CambioContrasenaPage as a modal bottom sheet
                   showModalBottomSheet(
                     context: context,
                     builder: (BuildContext context) {
-                      return CambioContrasenaPage(userId: widget.userId); // Pass userId to CambioContrasenaPage
+                      return CambioContrasenaPage(userId: widget.userId); 
                     },
                   );
                 },
@@ -119,7 +116,6 @@ class _ConfiguracionScreenState extends State<ConfiguracionScreen> {
               const SizedBox(height: 10.0),
               ElevatedButton(
                 onPressed: () {
-                  // Log out user
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => LoginPage()),
@@ -127,7 +123,7 @@ class _ConfiguracionScreenState extends State<ConfiguracionScreen> {
                 },
                 child: const Text('Cerrar Sesión'),
               ),
-              const SizedBox(height: 200.0), // Extra space for scrolling up when the keyboard is shown
+              const SizedBox(height: 200.0), 
             ],
           ),
         ),

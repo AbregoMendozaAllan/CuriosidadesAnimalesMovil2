@@ -23,7 +23,7 @@ class DatabaseController {
       path,
       version: 1,
       onCreate: (db, version) async {
-        // Create the user table
+        
         await db.execute('''
 CREATE TABLE user(
   userID TEXT PRIMARY KEY,
@@ -34,7 +34,7 @@ CREATE TABLE user(
 );
 ''');
 
-        // Create the animals table
+       
         await db.execute('''
 CREATE TABLE animals(
   animalID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -43,7 +43,7 @@ CREATE TABLE animals(
 );
 ''');
 
-        // Create the funfacts table
+    
         await db.execute('''
 CREATE TABLE funfacts(
   curiosityID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -54,7 +54,7 @@ CREATE TABLE funfacts(
 );
 ''');
 
-        // Create the favorite_animals table
+        
         await db.execute('''
 CREATE TABLE favorite_animals(
   userID TEXT,
@@ -65,9 +65,18 @@ CREATE TABLE favorite_animals(
 );
 ''');
 
-        // Create the favorite_curiosity table
+       
         await db.execute('''
 CREATE TABLE favorite_curiosity(
+  curiosityID INTEGER,
+  userID TEXT,
+  PRIMARY KEY(curiosityID, userID),
+  FOREIGN KEY (curiosityID) REFERENCES Curiosity (curiosityID),
+  FOREIGN KEY (userID) REFERENCES user (userID)
+);
+''');
+        await db.execute('''
+CREATE TABLE history(
   curiosityID INTEGER,
   userID TEXT,
   dateAdded TEXT NOT NULL,
@@ -76,11 +85,9 @@ CREATE TABLE favorite_curiosity(
   FOREIGN KEY (userID) REFERENCES user (userID)
 );
 ''');
-        // Insert initial data
+        
         await FunFactsDataset.insertInitialData(db);
-        // You would call these functions somewhere in your setup or as part of a user interaction:
-
-
+        
       },
     );
   }
@@ -193,12 +200,10 @@ CREATE TABLE favorite_curiosity(
   Future<void> addFavoriteCuriosities(
       String userID, List<int> curiosityIDs) async {
     final db = await instance.database;
-    String dateAdded = DateTime.now().toIso8601String();
     for (int curiosityID in curiosityIDs) {
       await db.insert('favorite_curiosity', {
         'curiosityID': curiosityID,
         'userID': userID,
-        'dateAdded': dateAdded
       });
     }
   }
@@ -208,7 +213,8 @@ CREATE TABLE favorite_curiosity(
     return await db.query('animals');
   }
 
-  Future<List<Map<String, dynamic>>> getFavoriteAnimalsForUser(String userID) async {
+  Future<List<Map<String, dynamic>>> getFavoriteAnimalsForUser(
+      String userID) async {
     final db = await instance.database;
     return await db.query(
       'favorite_animals',
@@ -230,15 +236,16 @@ CREATE TABLE favorite_curiosity(
 
   Future<void> updateFavoriteAnimals(String userID, List<int> animalIDs) async {
     final db = await instance.database;
-    // First, delete all existing favorite animals for the user
+    
     await db.delete(
       'favorite_animals',
       where: 'userID = ?',
       whereArgs: [userID],
     );
-    // Then, insert the new list of favorite animals for the user
+   
     for (int animalID in animalIDs) {
-      await db.insert('favorite_animals', {'userID': userID, 'animalID': animalID});
+      await db
+          .insert('favorite_animals', {'userID': userID, 'animalID': animalID});
     }
   }
 
@@ -259,64 +266,25 @@ CREATE TABLE favorite_curiosity(
     }
   }
 
-// Method to check if the curiosity is favorited by the current user
-  Future<bool> isCuriosityFavorite(int curiosityId, String userId) async {
-    final db = await instance.database;
-    final result = await db.query(
+  Future<void> insertFavoriteCuriosity(String userId, int curiosityID) async {
+    final db = await database;
+    await db.insert(
+      'favorite_curiosity',
+      {'curiosityID': curiosityID, 'userID': userId},
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<void> removeFavoriteCuriosity(String userId, int curiosityID) async {
+    final db = await database;
+    await db.delete(
       'favorite_curiosity',
       where: 'curiosityID = ? AND userID = ?',
-      whereArgs: [curiosityId, userId],
-    );
-    return result.isNotEmpty;
-  }
-
-  // DatabaseController.dart
-
-  Future<void> removeFavoriteCuriosities(String userID, List<int> curiosityIDs) async {
-    final db = await instance.database;
-    for (int curiosityID in curiosityIDs) {
-      await db.delete(
-        'favorite_curiosity',
-        where: 'userID = ? AND curiosityID = ?',
-        whereArgs: [userID, curiosityID],
-      );
-    }
-  }
-
-  // Inside DatabaseController class
-
-  Future<List<Map<String, dynamic>>> getFavoriteCuriositiesForUser(String userId) async {
-    final db = await instance.database;
-    return await db.query(
-      'favorite_curiosity',
-      where: 'userID = ?',
-      whereArgs: [userId],
+      whereArgs: [curiosityID, userId],
     );
   }
 
   Future<Map<String, dynamic>?> getAnimalByName(String animalName) async {
-    // Implement the logic to fetch animal details from the database by name
-    // Replace the following line with your actual implementation
-    return {'animalID': 1}; // Placeholder, replace with actual data
+    return {'animalID': 1}; 
   }
-
-  Future<void> updateFavoriteCuriosities(String userId, int curiosityId, bool isFavorite) async {
-    final db = await instance.database;
-    if (isFavorite) {
-      await db.insert('favorite_curiosity', {
-        'curiosityID': curiosityId,
-        'userID': userId,
-        'dateAdded': DateTime.now().toIso8601String(),
-      });
-    } else {
-      await db.delete(
-        'favorite_curiosity',
-        where: 'curiosityID = ? AND userID = ?',
-        whereArgs: [curiosityId, userId],
-      );
-    }
-  }
-
-
-
 }

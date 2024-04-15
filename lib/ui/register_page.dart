@@ -69,20 +69,17 @@ class _RegisterPageState extends State<RegisterPage> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                // Check if passwords match
                 if (_passwordController.text != _confirmPasswordController.text) {
                   _showErrorDialog('Las contraseñas no coinciden.');
                   return;
                 }
 
-                // Check if user ID already exists
                 final existingUser = await DatabaseController.instance.authenticateUser(_usernameController.text, _passwordController.text);
                 if (existingUser != null) {
                   _showErrorDialog('El usuario ya existe.');
                   return;
                 }
 
-                // Register user
                 final registeredUser = await DatabaseController.instance.registerUser(
                   _usernameController.text,
                   _firstNameController.text,
@@ -92,7 +89,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 );
 
                 if (registeredUser != null) {
-                  // Show success dialog
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
@@ -101,7 +97,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       actions: [
                         TextButton(
                           onPressed: () {
-                            // Navigate back to login screen
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(builder: (context) => LoginPage()),

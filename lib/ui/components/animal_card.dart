@@ -23,7 +23,7 @@ class AnimalCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisSize: MainAxisSize.min, // To make the card wrap its content
+          mainAxisSize: MainAxisSize.min, 
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
@@ -33,14 +33,14 @@ class AnimalCard extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 8.0), // For spacing
+            const SizedBox(height: 8.0), 
             Text(
               description,
               style: const TextStyle(
                 fontSize: 16.0,
               ),
             ),
-            const SizedBox(height: 8.0), // For spacing
+            const SizedBox(height: 8.0), 
             Align(
               alignment: Alignment.bottomRight,
               child: Text(

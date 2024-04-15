@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../data/database_controller.dart';
 import 'main_screen.dart';
-import 'register_page.dart'; // Import RegisterPage
+import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: Text('Inicio de Sesión'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -35,13 +35,13 @@ class _LoginPageState extends State<LoginPage> {
             TextField(
               controller: _userIDController,
               decoration: InputDecoration(
-                labelText: 'User ID',
+                labelText: 'Usuario',
               ),
             ),
             TextField(
               controller: _passwordController,
               decoration: InputDecoration(
-                labelText: 'Password',
+                labelText: 'Contraseña',
               ),
               obscureText: true,
             ),
@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                     context: context,
                     builder: (context) => AlertDialog(
                       title: Text('Error'),
-                      content: Text('Invalid user ID or password.'),
+                      content: Text('Usuario o Contraseña Incorrecta.'),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.pop(context),
@@ -76,17 +76,17 @@ class _LoginPageState extends State<LoginPage> {
                   );
                 }
               },
-              child: Text('Login'),
+              child: Text('Iniciar Sesión'),
             ),
             SizedBox(height: 20),
-            ElevatedButton( // Button to navigate to register page
+            ElevatedButton( 
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => RegisterPage()),
                 );
               },
-              child: Text('Register'),
+              child: Text('Registrarse'),
             ),
           ],
         ),
